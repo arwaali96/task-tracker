@@ -8,7 +8,7 @@ const Task = (props) => {
             >
             <h3>
                 {props.task.text}
-                <FaTimes style={{ color: 'crimson', cursor: 'pointer' }}
+                <FaTimes style={{ color: 'chocolate', cursor: 'pointer' }}
                     onClick={() => props.onDelete(props.task.id)}
                 />
             </h3>
