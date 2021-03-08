@@ -1,73 +1,123 @@
+import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import Tasks from './components/Tasks';
 import AddTask from './components/AddTask';
-import { useState } from 'react';
+import About from './components/About';
 
 function App() {
   // const name = 'Arwakalack';
   // const fill = true;
   const [showAddTask, setShowAddTask] = useState(false)
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      text: 'Pray fajr',
-      day: 'Feb 3rd at 6:00am',
-      reminder: true,
-    },
-    {
-      id: 2,
-      text: 'Pray duhr',
-      day: 'Feb 3rd at 1:00pm',
-      reminder: false,
-    }, {
-      id: 3,
-      text: 'Pray asr',
-      day: 'Feb 3rd at 3:15pm',
-      reminder: true,
+  const [tasks, setTasks] = useState([])
+
+  useEffect(() => {
+    const getTasks = async () => {
+      const tasksFromServer = await fetchTasks()
+      setTasks(tasksFromServer)
     }
-  ])
+
+    getTasks()
+  }, [])
+
+  // Fetch Tasks
+  const fetchTasks = async () => {
+    const res = await fetch('http://localhost:5000/tasks')
+    const data = await res.json()
+
+    return data
+  }
+
+  // Fetch Task
+  const fetchTask = async (id) => {
+    const res = await fetch(`http://localhost:5000/tasks/${id}`)
+    const data = await res.json()
+
+    return data
+  }
 
   // Add Task
-  const addTask = (task) => {
-    const id = Math.floor(Math.random() * 10000) + 1
-    // cant this great 2 tasks with same id?
-    // how exactly does toggling Add work?
-    // onAdd prop in header and addTask are different, right?
-    const newTask = { id, ...task }
-    setTasks([...tasks, newTask])
-    // console.log(tasks)
+  const addTask = async (task) => {
+    const res = await fetch('http://localhost:5000/tasks', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(task),
+    })
+
+    const data = await res.json()
+
+    setTasks([...tasks, data])
+    // const id = Math.floor(Math.random() * 10000) + 1
+    // const newTask = { id, ...task }
+    // setTasks([...tasks, newTask])
   }
 
   // Delete Task
-  const deleteTask = (id) => {
+  const deleteTask = async (id) => {
+    await fetch(`http://localhost:5000/tasks/${id}`, {
+      method: 'DELETE',
+    })
+
     setTasks(tasks.filter((task) => task.id !== id))
   }
 
   // Toggle Reminder
-  const toggleReminder = (id) => {
+  const toggleReminder = async (id) => {
+    const taskToToggle = await fetchTask(id)
+    const updatedTask = {
+      ...taskToToggle,
+      reminder: !taskToToggle.reminder
+    }
+
+    const res = await fetch(`http://localhost:5000/tasks/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(updatedTask),
+    })
+
+    const data = await res.json()
+
     setTasks(
       tasks.map((task) =>
         task.id === id ? {
-          ...task, reminder: !task.reminder
+          ...task, reminder: data.reminder
         } : task
       )
     )
   }
 
   return (
-    <div className="container">
-      <Header title='Task Tracker'
-        onAdd={() => setShowAddTask(!showAddTask)}
-        showAdd={showAddTask} />
-      {showAddTask && <AddTask onAdd={addTask} />}
-      {tasks.length > 0 ? (
-        <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
-      ) : (
-          'No tasks left!'
-        )}
-      {/* <h2>Hey {name} </h2>
+    <Router>
+      <div className="container">
+        <Header title='Task Tracker'
+          onAdd={() => setShowAddTask(!showAddTask)}
+          showAdd={showAddTask}
+        />
+        <Route
+          path='/'
+          exact
+          render={(props) => (
+            <>
+              {showAddTask && <AddTask onAdd={addTask} />}
+              {tasks.length > 0 ? (
+                <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
+              ) : (
+                'No tasks left!'
+              )}
+            </>
+          )} />
+        <Route path='/about' component={About} /
+        >
+        <Footer />
+        {/* <h2>Hey {name} </h2>
       <h3>Response: Hey, {fill ? "what's up!" : "I can't talk rn"}</h3> */}
-    </div>
+      </div>
+    </Router>
   );
 }
 
