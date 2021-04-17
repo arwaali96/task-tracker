@@ -8,7 +8,9 @@ This project includes the react UI as well as JSON-server for the mock backend.
 
 Node.js is a dependency 
 
+```
 #### 'npm install'
+```
 
 ### Run React dev server (http://localhost:3000)
 
