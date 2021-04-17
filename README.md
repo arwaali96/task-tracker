@@ -9,18 +9,24 @@ This project includes the react UI as well as JSON-server for the mock backend.
 Node.js is a dependency 
 
 ```
-#### 'npm install'
+npm install
 ```
 
 ### Run React dev server (http://localhost:3000)
 
-#### 'npm start'
+```
+npm start
+```
 
 ### Run the JSON server (http://localhost:5000)
 
-#### 'npm run server'
+```
+npm run server
+```
 
 ### To build for production
 
-#### 'npm run build'
+```
+npm run build
+```
 
