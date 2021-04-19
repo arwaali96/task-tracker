@@ -114,7 +114,7 @@ function App() {
         <Route path='/about' component={About} /
         >
         <Footer />
-        {/* <h2>Hey {name} </h2>
+        {/* <h2>Hey {name}! </h2>
       <h3>Response: Hey, {fill ? "what's up!" : "I can't talk rn"}</h3> */}
       </div>
     </Router>
