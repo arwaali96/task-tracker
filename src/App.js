@@ -93,7 +93,7 @@ function App() {
 
   // Fetch Tasks
   const fetchTasks = async () => {
-    const res = await fetch('https://my-task-tracking.herokuapp.com/api/tasks')
+    const res = await fetch('https://my-task-tracking.herokuapp.com/api')
     const data = await res.json()
 
     return data
