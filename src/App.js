@@ -93,7 +93,7 @@ function App() {
 
   // Fetch Tasks
   const fetchTasks = async () => {
-    const res = await fetch('https://my-task-tracking.herokuapp.com/api')
+    const res = await fetch('https://my-task-tracking.herokuapp.com/api/tasks')
     const data = await res.json()
 
     return data
@@ -101,7 +101,7 @@ function App() {
 
   // Fetch Task
   const fetchTask = async (id) => {
-    const res = await fetch(`https://my-task-tracking.herokuapp.com/api/${id}`)
+    const res = await fetch(`https://my-task-tracking.herokuapp.com/api//tasks/${id}`)
     const data = await res.json()
 
     return data
@@ -109,7 +109,7 @@ function App() {
 
   // Add Task
   const addTask = async (task) => {
-    const res = await fetch('https://my-task-tracking.herokuapp.com/api', {
+    const res = await fetch('https://my-task-tracking.herokuapp.com/api/tasks', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -127,7 +127,7 @@ function App() {
 
   // Delete Task
   const deleteTask = async (id) => {
-    await fetch(`https://my-task-tracking.herokuapp.com/api/${id}`, {
+    await fetch(`https://my-task-tracking.herokuapp.com/api/tasks/${id}`, {
       method: 'DELETE',
     })
 
@@ -142,7 +142,7 @@ function App() {
       reminder: !taskToToggle.reminder
     }
 
-    const res = await fetch(`https://my-task-tracking.herokuapp.com/api/${id}`, {
+    const res = await fetch(`https://my-task-tracking.herokuapp.com/api/tasks/${id}`, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',
