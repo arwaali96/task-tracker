@@ -7,8 +7,6 @@ import AddTask from './components/AddTask';
 import About from './components/About';
 
 function App() {
-  // const name = 'Arwakalack';
-  // const fill = true;
   const [showAddTask, setShowAddTask] = useState(false)
   const [tasks, setTasks] = useState([])
 
@@ -50,9 +48,6 @@ function App() {
     const data = await res.json()
 
     setTasks([...tasks, data])
-    // const id = Math.floor(Math.random() * 10000) + 1
-    // const newTask = { id, ...task }
-    // setTasks([...tasks, newTask])
   }
 
   // Delete Task
@@ -114,8 +109,6 @@ function App() {
         <Route path='/about' component={About} /
         >
         <Footer />
-        {/* <h2>Hey {name}! </h2>
-      <h3>Response: Hey, {fill ? "what's up!" : "I can't talk rn"}</h3> */}
       </div>
     </Router>
   );

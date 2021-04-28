@@ -15,9 +15,6 @@ const Header = (props) => {
                     text={props.showAdd ? 'Close' : 'Add'}
                     onClick={props.onAdd} />
             )}
-            
-            {/* <Button color= 'grey' text='Welcome' />
-            <Button color= 'black' text='Exit' /> */}
         </header>
     )
 }
@@ -29,10 +26,5 @@ Header.defaultProps = {
 Header.propTypes = {
     title: PropTypes.string,
 }
-
-// CSS in JSON, eg  <h1 style={headingStyle}>...</h1>
-// const headingStyle = {
-//     color: 'pink', backgroundColor: 'grey',
-// }
 
 export default Header
